@@ -1,18 +1,35 @@
 // Add imports above this line
 import SimpleLightbox from "simplelightbox";
+
 import "simplelightbox/dist/simple-lightbox.min.css";
-import { galleryItems } from './gallery-items';
 
-document.querySelector(".gallery").insertAdjacentHTML(
-    'beforeend',
-    galleryItems.map(({ preview, original, description }) => {
-        
-        return `<a class="gallery__item" href="${original}" >
-  <img class="gallery__image" src="${preview}" alt="${description}" />
-</a>`}).join(""));
+import { galleryItems } from './gallery-items.js';
+// Change code below this line
 
-new SimpleLightbox('.gallery a', {
-    captionsData: 'alt',
-    captionPosition: 'bottom',
-    captionDelay: 250,
-});
+const paletteContainer = document.querySelector(".gallery");
+
+const listImages = galleryItems
+                    .map(item => `<div class='gallery__item'>
+                                    <a class="gallery__link" href=${item.original}>
+                                        <img class='gallery__image'
+                                            src = ${item.preview}
+                                            alt = ${item.description}
+                                        />
+                                    </a>
+                                </div>`)
+                    .join('');
+
+
+
+paletteContainer.innerHTML = listImages;
+
+paletteContainer.addEventListener('click', showModal);
+
+const lightbox = new SimpleLightbox('.gallery a', {captions: true, captionSelector: 'img', captionsData: 'alt', captionDelay: 250});
+
+function showModal(event) {
+    if (event.target.nodeName !== 'IMG') {
+        return;
+    }
+    event.preventDefault();
+}
