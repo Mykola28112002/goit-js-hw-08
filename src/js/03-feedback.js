@@ -16,7 +16,9 @@ getLocaleStorageData();
 setformData();
 
 function getLocaleStorageData() {
+
   if (localStorage.getItem(KEYMSG)) {
+
     const storageData = JSON.parse(localStorage.getItem(KEYMSG));
     emailRef.value = storageData.email;
     messageRef.value = storageData.message;
@@ -24,20 +26,24 @@ function getLocaleStorageData() {
 }
 
 function setformData() {
+
   formData.email = emailRef.value;
   formData.message = messageRef.value;
 }
 
 function onFormInput(e) {
+
   formData[e.target.name] = e.target.value;
   localStorage.setItem(KEYMSG, JSON.stringify(formData));
 }
 
 function onFormSubmit(e) {
-  e.preventDefault();
-  if (formData.email !== '' && formData.message !== '') {
-    console.log(formData);
 
+  e.preventDefault();
+
+  if (formData.email !== '' && formData.message !== '') {
+
+    console.log(formData);
     e.currentTarget.reset();
     localStorage.removeItem(KEYMSG);
     setformData();
